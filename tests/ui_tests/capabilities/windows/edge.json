@@ -1,0 +1,6 @@
+{
+  "capabilities": {
+    "browserName": "MicrosoftEdge",
+    "os": "windows"
+  }
+}

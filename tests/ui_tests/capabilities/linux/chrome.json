@@ -1,0 +1,13 @@
+{
+  "capabilities": {
+    "browserName": "chrome",
+    "version": "78.0",
+    "goog:chromeOptions": {
+      "args": [
+        "--no-sandbox",
+        "--disable-gpu",
+        "--disable-dev-shm-usage"
+      ]
+    }
+  }
+}

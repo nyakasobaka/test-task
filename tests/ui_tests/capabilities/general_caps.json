@@ -1,0 +1,8 @@
+{
+  "capabilities": {
+    "screenResolution": "1920x1080x24",
+    "enableVNC": true,
+    "enableVideo": true,
+    "loggingPrefs": {"browser": "ALL"}
+  }
+}

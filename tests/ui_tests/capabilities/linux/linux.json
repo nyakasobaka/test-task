@@ -1,0 +1,7 @@
+{
+  "capabilities": {
+    "os": "linux",
+    "enableVNC": true,
+    "enableVideo": true
+  }
+}
