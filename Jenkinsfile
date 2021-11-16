@@ -21,7 +21,7 @@ pipeline {
                 sh 'python -m venv venv'
                 sh 'source venv/bin/activate'
                 sh 'python -m pip install -r requirements.txt --user'
-                sh "python -m pytest -k test_search_by_text -B ${params.BROWSER} --alluredir=./report -n ${params.THREADS}"
+                sh "python -m pytest -B ${params.BROWSER} --alluredir=./report -n ${params.THREADS}"
             }
         }
     }
