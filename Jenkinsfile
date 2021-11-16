@@ -30,7 +30,7 @@ pipeline {
         always {
             node (null) {
                 echo 'Generating Allure report'
-                sh 'ls -al allure-results'
+                sh 'ls -al report'
                 allure([
                     reportBuildPolicy: 'ALWAYS',
                     results          : [[path: 'report']]
