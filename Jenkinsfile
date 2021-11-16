@@ -30,6 +30,7 @@ pipeline {
         always {
             node (null) {
                 echo 'Generating Allure report'
+                sh 'chmod -R o+xw report'
                 allure([
                     reportBuildPolicy: 'ALWAYS',
                     results          : [[path: 'report']]
