@@ -32,7 +32,7 @@ pytest-xdist==1.33.0
 pytest-xvfb==1.2.0
 PyVirtualDisplay==2.2
 requests==2.24.0
-selenium==4.0.0
+selenium==3.141.0
 six==1.16.0
 toml==0.10.2
 typing-extensions==3.10.0.2
