@@ -14,7 +14,7 @@ pipeline {
             agent {
                 docker {
                     image 'python:3.9-alpine'
-                    args '-u root --net=host'
+                    args '--net=host'
                 }
             }
             steps {
