@@ -26,7 +26,7 @@ def check_search_results_header(ui_app, context):
 
 @then(parsers.parse("filter {filter_item} is selected in filter panel"))
 def verify_producer_is_selected_in_filter(ui_app, filter_item):
-    ui_app.pages.search_results_grid.wait_for_grid_loaded()
+    ui_app.pages.search_results_page.search_results_grid.wait_for_grid_loaded()
     assert_that(ui_app.pages.search_results_page.search_results_grid.is_checkbox_selected(filter_item)).is_true()
 
 
