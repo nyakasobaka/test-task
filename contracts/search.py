@@ -19,7 +19,7 @@ class ApiSearch:
     def search_in_category(self, **kwargs):
         try:
             cat = kwargs.pop("category")
-            kwargs['section_id'] = get_category_id_by_title(self.search(**kwargs), cat)
+            kwargs["section_id"] = get_category_id_by_title(self.search(**kwargs), cat)
         except KeyError:
             pass
         self.search_params.update(kwargs)
