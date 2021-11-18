@@ -62,7 +62,7 @@ def apply_filter_by_category(ui_app, context, category):
 
 @then("search results page contains correct amount of items")
 def validate_amount_of_items(ui_app, api, context):
-    if context.category:
+    if "category" in context:
         api_result = api.SearchModule.search_in_category(**context.as_dict())[0].quantities.goods_quantity_found
     else:
         api_result = api.SearchModule.search(**context.as_dict()).quantities.goods_quantity_found
