@@ -2,12 +2,12 @@ from models.search_model import SearchResponseModel
 
 
 def get_items_with_discount(client, params: dict):
-    resp = client.SearchModule.search_in_category(**params)
+    resp, _ = client.SearchModule.search_in_category(**params)
     return [item for item in resp.goods if item.old_price and item.old_price > item.price]
 
 
 def get_items_without_discount(client, params: dict):
-    resp = client.SearchModule.search_in_category(**params)
+    resp, _ = client.SearchModule.search_in_category(**params)
     return [item for item in resp.goods if item.price > 0 and item.old_price <= item.price]
 
 

@@ -19,9 +19,10 @@ class ApiSearch:
     def search_in_category(self, **kwargs):
         try:
             cat = kwargs.pop("category")
-            kwargs["section_id"] = get_category_id_by_title(self.search(**kwargs), cat)
+            cat_id = get_category_id_by_title(self.search(**kwargs), cat)
+            kwargs["section_id"] = cat_id
         except KeyError:
-            pass
+            raise ValueError("No such category in the list")
         self.search_params.update(kwargs)
         resp = self.api.get(f"{self.search_path}/", params=self.search_params)
-        return SearchResponseModel(resp)
+        return SearchResponseModel(resp), cat_id

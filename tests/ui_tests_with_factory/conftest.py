@@ -15,12 +15,9 @@ def pytest_generate_tests(metafunc):
 
 def pytest_configure(config):
     param_browsers_list = config.getoption("-B") or ["chrome"]
-    host = config.getoption("-H")
-    port = config.getoption("-P")
-
     SessionConfiguration.browsers = sorted(param_browsers_list) or []
-    SessionConfiguration.selenoid_host = host or "localhost"
-    SessionConfiguration.selenoid_port = port or 4444
+    SessionConfiguration.selenoid_host = "localhost"
+    SessionConfiguration.selenoid_port = 4444
 
 
 @pytest.fixture(scope="function")
@@ -29,16 +26,15 @@ def ui_test_fixture(request, browser):
     Test fixture to initialize driver
     """
     test_name = request.node.name
-    selenoid_host = request.config.getoption("-H")
-    selenoid_port = request.config.getoption("-P")
     driver = None
     additional_caps = {"enableVideo": False}
     additional_caps["name"] = test_name
     driver = DriverManager.get_driver(
         browser=browser,
         additional_caps=additional_caps,
-        host=selenoid_host,
-        port=selenoid_port
+        host=SessionConfiguration.selenoid_host,
+        port=SessionConfiguration.selenoid_port
+
     )
     yield driver
     try:

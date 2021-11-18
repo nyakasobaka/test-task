@@ -7,7 +7,7 @@ Feature: As a User
     Then response code is 200
 
   Scenario: Search by text and verify correct items returned
-    When Searching by text HyperX DDR4-2666
-    Then amount of found items is 125
+    When search by text Asus rog g14 in category Ноутбуки
+    Then all items have category Ноутбуки
 
 

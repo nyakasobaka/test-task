@@ -25,7 +25,6 @@ class Context:
     def as_dict(self):
         return self.__dict__
 
-
     @staticmethod
     def _prepare_key(key: str):
         return key.replace(" ", "_").lower()
