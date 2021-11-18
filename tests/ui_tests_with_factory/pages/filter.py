@@ -1,3 +1,4 @@
+# example of Decorator pattern. There is no need in it here, but task requires using it somewhere
 from abc import abstractmethod
 
 from selenium.webdriver.common.by import By

@@ -14,5 +14,6 @@ class SearchResultsPage(BasePage):
         self.header_text = Element(self.driver, self.header_text_locator)
 
     def get_header_text(self) -> str:
+        """get search results header text"""
         return self.header_text.text
 

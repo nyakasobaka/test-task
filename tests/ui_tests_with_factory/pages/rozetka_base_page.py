@@ -1,5 +1,3 @@
-from selenium.webdriver.common.by import By
-
 import constants
 from tests.ui_tests_with_factory.pages.base_page import BasePage
 from tests.ui_tests_with_factory.pages.element import Grid, TopMenuPanel
