@@ -1,9 +1,7 @@
-from enum import Enum
 from time import sleep
 
 from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException, \
-    ElementNotSelectableException, StaleElementReferenceException, ElementClickInterceptedException, TimeoutException, \
-    ElementNotInteractableException
+    ElementNotSelectableException, StaleElementReferenceException, ElementClickInterceptedException, TimeoutException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -114,10 +112,12 @@ class GridItem(Element):
         self.grid_item_old_price = Element(self.driver, self.grid_item_old_price_locator)
 
     def get_old_price(self):
+        """get price before discount"""
         price = self.grid_item_old_price.text.replace(" ", "")[:-1] if self.grid_item_old_price.text else 0
         return float(price)
 
     def get_price(self):
+        """get current price"""
         return float(self.grid_item_price.text.replace(" ", ""))
 
     def get_item_title(self):
@@ -198,9 +198,11 @@ class Grid(Element):
 
     @retry(exceptions=TimeoutException, tries=5, delay=5)
     def wait_for_grid_loaded(self):
+        """wait for grid to be loaded"""
         return self.grid.find_element(timeout=5)
 
     def get_item_by_title(self, title):
+        """get grid item with title"""
         locator = (By.XPATH, f"//ul[contains(@class,'catalog-grid')]//a[contains(@title, '{title}')]/parent::*")
         return GridItem(self.driver, locator)
 

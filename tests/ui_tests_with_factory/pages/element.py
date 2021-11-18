@@ -112,10 +112,18 @@ class GridItem(Element):
         self.grid_item_old_price = Element(self.driver, self.grid_item_old_price_locator)
 
     def get_old_price(self):
+        """
+        get item's price before discount
+        :return: float price
+        """
         price = self.grid_item_old_price.text.replace(" ", "")[:-1] if self.grid_item_old_price.text else 0
         return float(price)
 
     def get_price(self):
+        """
+        get item's price
+        :return: float price
+        """
         return float(self.grid_item_price.text.replace(" ", ""))
 
     def get_item_title(self):
@@ -137,10 +145,19 @@ class TopMenuPanel(Element):
         self.search_button = Element(self.driver, self.search_button_locator)
 
     def send_text_to_search_input(self, text: str):
+        """
+        enter text insearch input field without pressing search button
+        :param text: text to enter
+        :return:
+        """
         self.search_input.send_keys(text)
         return self
 
     def click_search_button(self):
+        """
+        click search button
+        :return:
+        """
         self.search_button.click()
 
 
@@ -214,9 +231,18 @@ class Grid(Element):
 
     @retry(exceptions=TimeoutException, tries=5, delay=5)
     def wait_for_grid_loaded(self):
+        """
+        wait till grid loaded
+        :return:
+        """
         return self.grid.find_element(timeout=5)
 
     def get_item_by_title(self, title):
+        """
+        search item in grid by title
+        :param title: title to search
+        :return:
+        """
         locator = (By.XPATH, f"//ul[contains(@class,'catalog-grid')]//a[contains(@title, '{title}')]/parent::*")
         return GridItem(self.driver, locator)
 
