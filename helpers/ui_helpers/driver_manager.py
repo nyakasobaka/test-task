@@ -14,15 +14,6 @@ from selenium.webdriver.opera.options import Options as OperaOptions
 from constants import CAPABILITIES_DIRECTORY
 
 
-def guess_os(host, port):
-    """
-    Guess remote OS, or set local
-    :param host: selenoid host
-    :param port: selenoid port
-    """
-    os_platform = platform.system().lower()
-    return os_platform
-
 def options(browser):
     if browser == "firefox":
         _options = FirefoxOptions()
@@ -43,30 +34,25 @@ def options(browser):
         _options.add_argument("disable-popup-blocking")
     elif browser == "opera":
         _options = OperaOptions()
-    elif browser == "ie":
-        _options = InternetExplorerOptions()
-    elif browser == "edge":
-        _options = EdgeOptions()
     else:
         raise ValueError(browser + " not supported")
     return _options
 
 
-def capabilities(browser, host, port):
+def capabilities(browser):
     _capabilities = {}
     general_caps = os.path.join(CAPABILITIES_DIRECTORY, "general_caps.json")
     with open(general_caps, "r") as readfile:
         caps_json = json.loads(readfile.read())
         for cap in caps_json["capabilities"]:
             _capabilities.update({cap: caps_json["capabilities"][cap]})
-    os_name = guess_os(host, port)
+    os_name = platform.system().lower()
     platform_dir = os.path.join(CAPABILITIES_DIRECTORY, os_name, "")
     platform_caps = os.path.join(platform_dir, os_name + ".json")
     with open(platform_caps, "r") as readfile:
         caps_json = json.loads(readfile.read())
         for cap in caps_json["capabilities"]:
             _capabilities.update({cap: caps_json["capabilities"][cap]})
-    browser = browser.replace("internet explorer", "ie").replace("MicrosoftEdge", "edge")
     browser_caps = os.path.join(platform_dir + browser + ".json")
     with open(browser_caps, "r") as readfile:
         caps_json = json.loads(readfile.read())
@@ -78,7 +64,7 @@ def capabilities(browser, host, port):
 def get_driver(browser, additional_caps, host, port):
     http_prefix = "" if "http" in host else "http://"
     executor = f"{http_prefix}{host}:{port}/wd/hub"
-    caps = capabilities(browser, host, port)
+    caps = capabilities(browser)
     opt = options(browser)
     if additional_caps is not None:
         caps.update(additional_caps)
@@ -93,7 +79,5 @@ def get_driver(browser, additional_caps, host, port):
             print(_exception.msg, f"\nPulling image: {image_name}")
             os.system(f"docker pull {image_name}")
         raise _exception
-    if browser != "MicrosoftEdge":
-        # does not work in edge
-        driver.set_window_size(1920, 1080)
+    driver.set_window_size(1920, 1080)
     return driver

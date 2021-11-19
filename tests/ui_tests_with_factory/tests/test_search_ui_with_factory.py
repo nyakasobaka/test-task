@@ -57,12 +57,16 @@ def apply_price_search(search_page):
 
 @when(parsers.parse("select category {category}"))
 def apply_filter_by_category(search_page, context, category):
-    context['category'] = category
+    context.category = category
     search_page.set_category(category).search_results_grid.wait_for_grid_loaded()
 
 @then("search results page contains correct amount of items")
 def validate_amount_of_items(search_page, api, context):
-    api_result = api.SearchModule.search_in_category(**context.as_dict()).quantities.goods_quantity_found
+    if "category" in context:
+        api_result = api.SearchModule.search_in_category(**context.as_dict())[0].quantities.goods_quantity_found
+    else:
+        api_result = api.SearchModule.search(**context.as_dict()).quantities.goods_quantity_found
+
     ui_amount = search_page.get_total_amount_of_goods().split(" ")[-2]
     assert_that(int(api_result), f"Amounts doesn't match - {api_result} returned "
                                  f"from api and {ui_amount} returned from ui"
