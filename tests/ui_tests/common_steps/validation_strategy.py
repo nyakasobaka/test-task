@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from assertpy import soft_assertions, assert_that
 
-from models.search_model import GoodsModel
+from models.goods_item_model import GoodsItemModel
 from tests.ui_tests.pages.element import GridItem
 
 
@@ -25,12 +25,12 @@ class ValidationContext():
     def strategy(self, strategy: Strategy):
         self._strategy = strategy
 
-    def validate_price(self, api_elem: GoodsModel, ui_elem: GridItem):
+    def validate_price(self, api_elem: GoodsItemModel, ui_elem: GridItem):
         self._strategy.check_price(api_elem, ui_elem)
 
 
 class DiscountValidationStrategy(Strategy):
-    def check_price(self, api_elem: GoodsModel, ui_elem: GridItem):
+    def check_price(self, api_elem: GoodsItemModel, ui_elem: GridItem):
         """
         check api and ui old prices are equal
         check api and ui prices are equal
@@ -47,7 +47,7 @@ class DiscountValidationStrategy(Strategy):
 
 
 class PriceValidationStrategy(Strategy):
-    def check_price(self, api_elem: GoodsModel, ui_elem: GridItem):
+    def check_price(self, api_elem: GoodsItemModel, ui_elem: GridItem):
         """
         check old prise is 0
         check price equals to api

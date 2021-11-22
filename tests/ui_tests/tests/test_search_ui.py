@@ -83,17 +83,19 @@ def validate_amount_of_items(ui_app, api, context):
 @then("check item price with discount is correct")
 def check_price_with_discount(ui_app, api, context):
     item_with_discount = get_items_with_discount(api, context.as_dict())[0]
+    api_element = api.GetGoodsItemModule.get_goods_item_by_id(item_with_discount.id)
     ui_result = ui_app.pages.search_results_page.search_results_grid.get_item_by_title(item_with_discount.title)
     strategy_context = ValidationContext(DiscountValidationStrategy())
-    strategy_context.validate_price(item_with_discount, ui_result)
+    strategy_context.validate_price(api_element, ui_result)
 
 
 @then("check item price without discount is correct")
 def check_price_without_discount(ui_app, api, context):
     item_without_discount = get_items_without_discount(api, context.as_dict())[0]
+    api_element = api.GetGoodsItemModule.get_goods_item_by_id(item_without_discount.id)
     ui_result = ui_app.pages.search_results_page.search_results_grid.get_item_by_title(item_without_discount.title)
     strategy_context = ValidationContext(PriceValidationStrategy())
-    strategy_context.validate_price(item_without_discount, ui_result)
+    strategy_context.validate_price(api_element, ui_result)
 
 
 @scenario("test_search_ui.feature", "Search by text")

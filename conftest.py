@@ -18,7 +18,7 @@ def pytest_addoption(parser):
 @pytest.fixture(scope="module")
 def api():
     api_client = ApiClient()
-    return APIFacade(api_client.api)
+    return APIFacade(api_client)
 
 
 @pytest.fixture(scope="module")
