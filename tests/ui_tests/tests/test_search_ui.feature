@@ -23,7 +23,7 @@ Feature: As a User I should be able to search for goods
     Given main page opened
     When enter text Ноутбук into search field
     And click search button
-    And select filters Asus, Acer in filter panel
+    And select producers Asus, Acer in filter panel
     Then filter Asus is selected in filter panel
     Then filter Acer is selected in filter panel
 
