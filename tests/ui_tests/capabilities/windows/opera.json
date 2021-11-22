@@ -1,9 +1,0 @@
-{
-  "capabilities": {
-    "browserName": "opera",
-    "goog:chromeOptions": {
-      "binary": "C:\\Users\\qauser\\AppData\\Local\\Programs\\Opera\\58.0.3135.65\\opera.exe"
-    },
-    "os": "windows"
-  }
-}

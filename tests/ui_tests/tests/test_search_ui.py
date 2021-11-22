@@ -37,27 +37,34 @@ def select_filter_item_in_filter(ui_app, context, filters):
         ui_app.pages.search_results_page.search_results_grid.filter_by_checkbox(filter_item)
 
 
+@when(parsers.parse("select producers {filters} in filter panel"))
+def select_producer_item_in_filter(ui_app, context, filters):
+    context.filters_list = filters.replace(" ", "").split(",")
+    for filter_item in context.filters_list:
+        ui_app.pages.search_results_page.set_producer(filter_item)
+
+
 @when(parsers.parse("set min price in filter panel to {price}"))
-def se_min_price_in_filter(ui_app, context, price):
+def set_min_price_in_filter(ui_app, context, price):
     context["min_price"] = price
-    ui_app.common_steps.search_steps.set_min_price(price)
+    ui_app.pages.search_results_page.set_min_price(price)
 
 
 @when(parsers.parse("set max price in filter panel to {price}"))
 def set_max_price_in_filter(ui_app, context, price):
     context["max_price"] = price
-    ui_app.common_steps.search_steps.set_max_price(price)
+    ui_app.pages.search_results_page.set_max_price(price)
 
 
 @when("apply search by price")
 def apply_price_search(ui_app):
-    ui_app.common_steps.search_steps.submit_price()
+    ui_app.pages.search_results_page.submit_price()
 
 
 @when(parsers.parse("select category {category}"))
 def apply_filter_by_category(ui_app, context, category):
     context.category = category
-    ui_app.pages.search_results_page.search_results_grid.filter_by_category(category)
+    ui_app.pages.search_results_page.set_category(category)
 
 
 @then("search results page contains correct amount of items")

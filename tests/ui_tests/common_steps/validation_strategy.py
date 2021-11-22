@@ -34,7 +34,7 @@ class DiscountValidationStrategy(Strategy):
         """
         check api and ui old prices are equal
         check api and ui prices are equal
-        :param elem: Element to check price
+        :param ui_elem: Element to check price
         :param api_elem: api element to be compared
         :return: None
         """

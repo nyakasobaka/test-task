@@ -134,25 +134,13 @@ class Grid(Element):
     pagination_list_locator = (By.XPATH, "//ul[@class='pagination__list']")
     filter_panel_locator = (By.XPATH, "//aside[contains(@class,'sidebar')]")
     total_amount_locator = (By.XPATH, "//p[contains(@class,'catalog-selection__label')]")
-    seller_filtration_block_locator = (By.XPATH, "//div[@data-filter-name='seller']")
-    ready_for_delivery_filtration_block_locator = (By.XPATH, "//div[@data-filter-name='gotovo-k-otpravke']")
-    producer_filtration_block_locator = (By.XPATH, "//div[@data-filter-name='producer']")
-    min_price_locator = (By.XPATH, "//input[@formcontrolname='min']")
-    max_price_locator = (By.XPATH, "//input[@formcontrolname='max']")
-    submit_price_button_locator = (By.XPATH, "//button[contains(@class,'slider-filter__button')]")
 
     def __init__(self, driver, locator=grid_locator):
         super().__init__(driver, locator)
         self.grid = Element(self.driver, locator)
         self.filter_panel = Element(self.driver, self.filter_panel_locator)
-        self.seller_filtration_block = Element(self.driver, self.seller_filtration_block_locator)
-        self.ready_for_delivery_filtration_block = Element(self.driver, self.ready_for_delivery_filtration_block_locator)
-        self.producer_filtration_block = Element(self.driver, self.producer_filtration_block_locator)
         self.pagination_list = Element(self.driver, self.pagination_list_locator)
         self.total_amount = Element(self.driver, self.total_amount_locator)
-        self.min_price_input = Element(self.driver, self.min_price_locator)
-        self.max_price_input = Element(self.driver, self.max_price_locator)
-        self.submit_price_button = Element(self.driver, self.submit_price_button_locator)
 
     @retry(tries=4, delay=2)
     def filter_by_checkbox(self, filter_text: str):

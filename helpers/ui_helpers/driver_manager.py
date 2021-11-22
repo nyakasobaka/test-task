@@ -6,9 +6,7 @@ import urllib3
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.webdriver.ie.options import Options as InternetExplorerOptions
 from selenium.webdriver.opera.options import Options as OperaOptions
 
 from constants import CAPABILITIES_DIRECTORY
@@ -19,7 +17,6 @@ def options(browser):
         _options = FirefoxOptions()
         _options.set_preference("browser.download.folderList", 2)
         _options.set_preference("browser.download.manager.showWhenStarting", False)
-        # _options.set_preference("browser.download.dir", save_to_path)
         _options.set_preference("browser.download.dir", "/home/selenium/Downloads/")
         _options.set_preference("browser.helperApps.neverAsk.saveToDisk", "text/csv")
 
@@ -32,14 +29,17 @@ def options(browser):
         _options.add_argument("safebrowsing-disable-extension-blacklist")
         _options.add_argument("safebrowsing-disable-download-protection")
         _options.add_argument("disable-popup-blocking")
-    elif browser == "opera":
-        _options = OperaOptions()
     else:
         raise ValueError(browser + " not supported")
     return _options
 
 
 def capabilities(browser):
+    """
+    prepare desired capabilities by combining os, browser and general capabilities
+    :param browser: browser for which capabilities are needed
+    :return: dictionary with capabilities
+    """
     _capabilities = {}
     general_caps = os.path.join(CAPABILITIES_DIRECTORY, "general_caps.json")
     with open(general_caps, "r") as readfile:
