@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from assertpy import soft_assertions, assert_that
 
 from models.search_model import GoodsModel
-from tests.ui_tests.pages.element import Element, GridItem
+from tests.ui_tests.pages.element import GridItem
 
 
 class Strategy(ABC):
@@ -39,8 +39,11 @@ class DiscountValidationStrategy(Strategy):
         :return: None
         """
         with soft_assertions():
-            assert_that(ui_elem.get_price()).is_equal_to(api_elem.price)
-            assert_that(ui_elem.get_old_price()).is_equal_to(api_elem.old_price)
+            assert_that(ui_elem.get_price(), f"Price on ui is {ui_elem.get_price()} "
+                                             f"and price from api is {api_elem.price}").is_equal_to(api_elem.price)
+            assert_that(ui_elem.get_old_price(), f"old price on ui is {ui_elem.get_old_price()}"
+                                                 f"and api old price is {api_elem.old_price}").is_equal_to(api_elem
+                                                                                                           .old_price)
 
 
 class PriceValidationStrategy(Strategy):
@@ -53,5 +56,6 @@ class PriceValidationStrategy(Strategy):
         :return:
         """
         with soft_assertions():
-            assert_that(ui_elem.get_old_price()).is_equal_to(0)
-            assert_that(ui_elem.get_price()).is_equal_to(api_elem.price)
+            assert_that(ui_elem.get_old_price(), f"Old price is not 0, but {ui_elem.get_old_price()}").is_equal_to(0)
+            assert_that(ui_elem.get_price(), f"Api price is {api_elem.price} "
+                                             f"and ui price is {ui_elem.get_price()}").is_equal_to(api_elem.price)
