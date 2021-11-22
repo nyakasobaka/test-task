@@ -90,7 +90,7 @@ class Element:
             actions.perform()
             sleep(0.1)
             # Fix for FF
-            self.driver.execute_script("arguments[0].scrollIntoView();", element)
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
 
 
 class GridItem(Element):
