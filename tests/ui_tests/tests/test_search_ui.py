@@ -41,7 +41,8 @@ def select_filter_item_in_filter(ui_app, context, filters):
 def select_producer_item_in_filter(ui_app, context, filters):
     context.filters_list = filters.replace(" ", "").split(",")
     for filter_item in context.filters_list:
-        ui_app.pages.search_results_page.set_producer(filter_item)
+        if not ui_app.pages.search_results_page.search_results_grid.is_checkbox_selected(filter_item):
+            ui_app.pages.search_results_page.set_producer(filter_item)
 
 
 @when(parsers.parse("set min price in filter panel to {price}"))
