@@ -17,7 +17,6 @@ Feature: As a User I should be able to search for goods
     Given main page opened
     When enter text Asus into search field
     Then click search button
-    And select producers Asus in filter panel
     Then filter Asus is selected in filter panel
 
   Scenario: Search by multiple producers and check filter functionality
