@@ -26,7 +26,9 @@ class CategoryFilterComponent(FilterPanelComponent):
 
     def select_filter(self, filter_text):
         locator = (By.XPATH, f"//rz-filter-categories//span[contains(text(), '{filter_text}')]/parent::*")
-        Element(self.driver, locator).click_with_js()
+        elem = Element(self.driver, locator)
+        elem.scroll_into_view()
+        elem.click_with_js()
 
 
 class SellerFilterComponent(FilterPanelComponent):
