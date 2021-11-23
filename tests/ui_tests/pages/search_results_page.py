@@ -42,7 +42,8 @@ class SearchResultsPage(BasePage):
         self.search_results_grid.wait_for_grid_loaded()
         return self
 
-    @retry(tries=4, delay=2, exceptions=MoveTargetOutOfBoundsException)
+    @retry(tries=4, delay=2, exceptions=StaleElementReferenceException,
+           action_before_retry=lambda: SearchResultsPage.driver.refresh())
     def set_producer(self, producer):
         """
         Select checkbox with producer in left panel
