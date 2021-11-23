@@ -19,6 +19,7 @@ class SearchResultsPage(BasePage):
         self.categories = CategoryFilterComponent(self.driver)
         self.producers = ProducerFilterComponent(self.driver)
         self.prices = PriceFilterComponent(self.driver)
+        SearchResultsPage.driver = self.driver
 
     def get_header_text(self) -> str:
         """get search results header text"""
