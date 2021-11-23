@@ -1,7 +1,8 @@
 from time import sleep
 
 from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException, \
-    ElementNotSelectableException, StaleElementReferenceException, ElementClickInterceptedException, TimeoutException
+    ElementNotSelectableException, StaleElementReferenceException, ElementClickInterceptedException, TimeoutException, \
+    MoveTargetOutOfBoundsException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -79,17 +80,6 @@ class Element:
         except TimeoutException:
             return False
 
-    def scroll_shim(self, passed_in_driver):
-        x = self.find_element().location['x']
-        y = self.find_element().location['y']
-        scroll_by_coord = 'window.scrollTo(%s,%s);' % (
-            x,
-            y
-        )
-        scroll_nav_out_of_way = 'window.scrollBy(0, -120);'
-        passed_in_driver.execute_script(scroll_by_coord)
-        passed_in_driver.execute_script(scroll_nav_out_of_way)
-
     def scroll_into_view(self, timeout=constants.DEFAULT_PAGE_LOAD_TIMEOUT):
         """
         Scrolls to element
@@ -101,9 +91,10 @@ class Element:
             actions.perform()
             sleep(0.1)
             # Fix for FF
-            if 'firefox' in self.driver.capabilities['browserName']:
-                self.scroll_shim(self.driver)
-            self.driver.execute_script("arguments[0].scrollIntoView();", element)
+            try:
+                self.driver.execute_script("arguments[0].scrollIntoView();", element)
+            except MoveTargetOutOfBoundsException:
+                self.driver.execute_script("arguments[0].scrollIntoView(false);", element)
 
 
 class GridItem(Element):
