@@ -1,4 +1,4 @@
-from selenium.common.exceptions import MoveTargetOutOfBoundsException
+from selenium.common.exceptions import MoveTargetOutOfBoundsException, StaleElementReferenceException
 from selenium.webdriver.common.by import By
 
 from helpers.retry_helper import retry

@@ -51,7 +51,7 @@ class ProducerFilterComponent(FilterPanelComponent):
     filter_panel_locator = (By.XPATH, filter_panel_locator_text)
 
     def __init__(self, driver, locator=filter_panel_locator):
-        super().__init__(driver, locator)
+        super().__init__(driver, locator).scroll_into_view()
 
     def select_filter(self, filter_text):
         locator = (By.XPATH, f"{self.filter_panel_locator_text}//input[{ignore_case_xpath('@id', filter_text)}]")
