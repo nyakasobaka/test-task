@@ -15,7 +15,7 @@ Feature: As a User I should be able to search for goods
 
   Scenario: Search by producer and check correct result returned
     Given main page opened
-    When enter text Asus into search field
+    When enter text asus rog strix g17 into search field
     Then click search button
     Then filter Asus is selected in filter panel
 
