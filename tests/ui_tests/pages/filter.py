@@ -4,6 +4,7 @@ from abc import abstractmethod
 from selenium.webdriver.common.by import By
 
 from helpers.common_helpers import ignore_case_xpath
+from helpers.retry_helper import retry
 from tests.ui_tests.pages.element import Element
 
 
