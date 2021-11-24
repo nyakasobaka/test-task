@@ -130,11 +130,13 @@ class GridItem(Element):
         self.grid_item_currency = Element(self.driver, self.grid_item_currency_locator)
         self.grid_item_old_price = Element(self.driver, self.grid_item_old_price_locator)
 
+    @retry(exceptions=TimeoutException, tries=5, delay=2)
     def get_old_price(self):
         """get price before discount"""
         price = self.grid_item_old_price.text.replace(" ", "")[:-1] if self.grid_item_old_price.text else 0
         return float(price)
 
+    @retry(exceptions=TimeoutException, tries=5, delay=2)
     def get_price(self):
         """get current price"""
         return float(self.grid_item_price.text.replace(" ", ""))
@@ -208,6 +210,7 @@ class Grid(Element):
         """wait for grid to be loaded"""
         return self.grid.find_element(timeout=5)
 
+    @retry(exceptions=TimeoutException, tries=5, delay=5)
     def get_item_by_title(self, title):
         """get grid item with title"""
         locator = (By.XPATH, f"//ul[contains(@class,'catalog-grid')]//a[contains(@title, '{title}')]/parent::*")
