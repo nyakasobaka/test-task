@@ -14,7 +14,7 @@ pipeline {
                 }
             }
             steps {
-                sh "python -m pytest -B ${params.BROWSER} --alluredir=./report -n ${params.THREADS}"
+                sh "python -m pytest -B ${params.BROWSER} --alluredir=./report -n ${params.THREADS} --reruns 2"
             }
         }
     }
