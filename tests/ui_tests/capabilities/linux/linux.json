@@ -2,6 +2,7 @@
   "capabilities": {
     "os": "linux",
     "enableVNC": true,
-    "enableVideo": true
+    "enableVideo": true,
+    "sessionTimeout": "5m"
   }
 }

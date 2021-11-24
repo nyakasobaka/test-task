@@ -1,7 +1,9 @@
 #!/usr/bin/env groovy
 pipeline {
     agent none
-    triggers { cron('0 * * * *') }
+    triggers {
+    cron('5 * * * * %BROWSER=chrome' + '\n 0 * * * * %BROWSER=firefox')
+    }
     parameters {
         choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'Select browser')
         string(name: 'THREADS', description: 'Define threads count', defaultValue: '4')
@@ -14,7 +16,7 @@ pipeline {
                 }
             }
             steps {
-                sh "python -m pytest -B ${params.BROWSER} --alluredir=./report -n ${params.THREADS}"
+                sh "python -m pytest -B ${params.BROWSER} --alluredir=./report -n ${params.THREADS} --reruns 2"
             }
         }
     }

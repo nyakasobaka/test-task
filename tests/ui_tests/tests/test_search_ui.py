@@ -37,27 +37,34 @@ def select_filter_item_in_filter(ui_app, context, filters):
         ui_app.pages.search_results_page.search_results_grid.filter_by_checkbox(filter_item)
 
 
+@when(parsers.parse("select producers {filters} in filter panel"))
+def select_producer_item_in_filter(ui_app, context, filters):
+    context.filters_list = filters.replace(" ", "").split(",")
+    for filter_item in context.filters_list:
+        ui_app.pages.search_results_page.set_producer(filter_item)
+
+
 @when(parsers.parse("set min price in filter panel to {price}"))
-def se_min_price_in_filter(ui_app, context, price):
+def set_min_price_in_filter(ui_app, context, price):
     context["min_price"] = price
-    ui_app.common_steps.search_steps.set_min_price(price)
+    ui_app.pages.search_results_page.set_min_price(price)
 
 
 @when(parsers.parse("set max price in filter panel to {price}"))
 def set_max_price_in_filter(ui_app, context, price):
     context["max_price"] = price
-    ui_app.common_steps.search_steps.set_max_price(price)
+    ui_app.pages.search_results_page.set_max_price(price)
 
 
 @when("apply search by price")
 def apply_price_search(ui_app):
-    ui_app.common_steps.search_steps.submit_price()
+    ui_app.pages.search_results_page.submit_price()
 
 
 @when(parsers.parse("select category {category}"))
 def apply_filter_by_category(ui_app, context, category):
     context.category = category
-    ui_app.pages.search_results_page.search_results_grid.filter_by_category(category)
+    ui_app.pages.search_results_page.set_category(category)
 
 
 @then("search results page contains correct amount of items")
@@ -76,17 +83,19 @@ def validate_amount_of_items(ui_app, api, context):
 @then("check item price with discount is correct")
 def check_price_with_discount(ui_app, api, context):
     item_with_discount = get_items_with_discount(api, context.as_dict())[0]
-    ui_result = ui_app.pages.search_results_page.search_results_grid.get_item_by_title(item_with_discount.title)
+    api_element = api.GetGoodsItemModule.get_goods_item_by_id(item_with_discount.id)
+    ui_result = ui_app.pages.search_results_page.search_results_grid.get_grid_item_by_good_id(item_with_discount.id)
     strategy_context = ValidationContext(DiscountValidationStrategy())
-    strategy_context.validate_price(item_with_discount, ui_result)
+    strategy_context.validate_price(api_element, ui_result)
 
 
 @then("check item price without discount is correct")
 def check_price_without_discount(ui_app, api, context):
     item_without_discount = get_items_without_discount(api, context.as_dict())[0]
+    api_element = api.GetGoodsItemModule.get_goods_item_by_id(item_without_discount.id)
     ui_result = ui_app.pages.search_results_page.search_results_grid.get_item_by_title(item_without_discount.title)
     strategy_context = ValidationContext(PriceValidationStrategy())
-    strategy_context.validate_price(item_without_discount, ui_result)
+    strategy_context.validate_price(api_element, ui_result)
 
 
 @scenario("test_search_ui.feature", "Search by text")

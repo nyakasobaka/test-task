@@ -15,7 +15,7 @@ Feature: As a User I should be able to search for goods
 
   Scenario: Search by producer and check correct result returned
     Given main page opened
-    When enter text Asus into search field
+    When enter text asus rog strix g17 into search field
     Then click search button
     Then filter Asus is selected in filter panel
 
@@ -23,7 +23,7 @@ Feature: As a User I should be able to search for goods
     Given main page opened
     When enter text Ноутбук into search field
     And click search button
-    And select filters Asus, Acer in filter panel
+    And select producers Asus, Acer in filter panel
     Then filter Asus is selected in filter panel
     Then filter Acer is selected in filter panel
 

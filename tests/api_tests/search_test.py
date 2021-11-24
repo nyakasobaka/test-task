@@ -1,8 +1,6 @@
 from assertpy import assert_that
 from pytest_bdd import scenario, when, then, parsers
 
-from helpers.api_helpers import get_category_id_by_title
-
 
 @when(parsers.parse("Searching by text {text}"))
 def search_by_text(api, text, context):

@@ -16,5 +16,6 @@ class RozetkaBasePage(BasePage):
         self.goods_grid = Grid(self.driver)
 
     def open_main_page(self):
+        """opens main page"""
         self.go_to(constants.UI_URL)
         return self

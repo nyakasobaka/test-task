@@ -22,7 +22,6 @@ class ApiSession(Session):
         headers["Cache-Control"] = "no-cache"
         url = self._build_url(url)
 
-        @step(f"{method}: {url}")
         def internal_request():
             LOGGER.info(f"Request: [{method}: {url}]")
             LOGGER.debug(f"Request body: [{data}]")
@@ -42,6 +41,7 @@ class ApiSession(Session):
 
     @staticmethod
     def _attach_request_artifacts(request: requests.PreparedRequest, response: requests.Response):
+        """Building http attachments with payloads using mako templates from allure_pytest_bdd folder"""
         builder = http_attachment("Request")
         builder.add_url(request.url)
         builder.add_method(request.method)

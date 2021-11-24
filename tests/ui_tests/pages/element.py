@@ -79,18 +79,31 @@ class Element:
         except TimeoutException:
             return False
 
+    def scroll_shim(self, passed_in_driver, element):
+        """scroll to coordinates. Needed for FF"""
+        x = element.location['x']
+        y = element.location['y']
+        scroll_by_coord = 'window.scrollTo(%s,%s);' % (
+            x,
+            y
+        )
+        scroll_nav_out_of_way = 'window.scrollBy(0, -120);'
+        passed_in_driver.execute_script(scroll_by_coord)
+        passed_in_driver.execute_script(scroll_nav_out_of_way)
+
     def scroll_into_view(self, timeout=constants.DEFAULT_PAGE_LOAD_TIMEOUT):
         """
         Scrolls to element
         """
         if not self.is_displayed():
             element = self.find_element(timeout)
+            #fix for FF MoveTargetOutOfBoundsException exception
+            if 'firefox' in self.driver.capabilities['browserName']:
+                self.scroll_shim(self.driver, element)
             actions = ActionChains(self.driver)
             actions.move_to_element(element)
             actions.perform()
             sleep(0.1)
-            # Fix for FF
-            self.driver.execute_script("arguments[0].scrollIntoView();", element)
 
 
 class GridItem(Element):
@@ -134,25 +147,13 @@ class Grid(Element):
     pagination_list_locator = (By.XPATH, "//ul[@class='pagination__list']")
     filter_panel_locator = (By.XPATH, "//aside[contains(@class,'sidebar')]")
     total_amount_locator = (By.XPATH, "//p[contains(@class,'catalog-selection__label')]")
-    seller_filtration_block_locator = (By.XPATH, "//div[@data-filter-name='seller']")
-    ready_for_delivery_filtration_block_locator = (By.XPATH, "//div[@data-filter-name='gotovo-k-otpravke']")
-    producer_filtration_block_locator = (By.XPATH, "//div[@data-filter-name='producer']")
-    min_price_locator = (By.XPATH, "//input[@formcontrolname='min']")
-    max_price_locator = (By.XPATH, "//input[@formcontrolname='max']")
-    submit_price_button_locator = (By.XPATH, "//button[contains(@class,'slider-filter__button')]")
 
     def __init__(self, driver, locator=grid_locator):
         super().__init__(driver, locator)
         self.grid = Element(self.driver, locator)
         self.filter_panel = Element(self.driver, self.filter_panel_locator)
-        self.seller_filtration_block = Element(self.driver, self.seller_filtration_block_locator)
-        self.ready_for_delivery_filtration_block = Element(self.driver, self.ready_for_delivery_filtration_block_locator)
-        self.producer_filtration_block = Element(self.driver, self.producer_filtration_block_locator)
         self.pagination_list = Element(self.driver, self.pagination_list_locator)
         self.total_amount = Element(self.driver, self.total_amount_locator)
-        self.min_price_input = Element(self.driver, self.min_price_locator)
-        self.max_price_input = Element(self.driver, self.max_price_locator)
-        self.submit_price_button = Element(self.driver, self.submit_price_button_locator)
 
     @retry(tries=4, delay=2)
     def filter_by_checkbox(self, filter_text: str):
@@ -204,6 +205,11 @@ class Grid(Element):
     def get_item_by_title(self, title):
         """get grid item with title"""
         locator = (By.XPATH, f"//ul[contains(@class,'catalog-grid')]//a[contains(@title, '{title}')]/parent::*")
+        return GridItem(self.driver, locator)
+
+    def get_grid_item_by_good_id(self, item_id):
+        """get grid item by item id"""
+        locator = (By.XPATH, f"//div[@data-goods-id={item_id}]")
         return GridItem(self.driver, locator)
 
 
