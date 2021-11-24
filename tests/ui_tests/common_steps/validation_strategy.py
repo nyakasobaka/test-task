@@ -13,7 +13,7 @@ class Strategy(ABC):
         pass
 
 
-class ValidationContext():
+class ValidationContext:
     def __init__(self, strategy: Strategy):
         self._strategy = strategy
 

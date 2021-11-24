@@ -1,8 +1,7 @@
 from time import sleep
 
 from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException, \
-    ElementNotSelectableException, StaleElementReferenceException, ElementClickInterceptedException, TimeoutException, \
-    MoveTargetOutOfBoundsException
+    ElementNotSelectableException, StaleElementReferenceException, ElementClickInterceptedException, TimeoutException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -81,6 +80,7 @@ class Element:
             return False
 
     def scroll_shim(self, passed_in_driver, element):
+        """scroll to coordinates. Needed for FF"""
         x = element.location['x']
         y = element.location['y']
         scroll_by_coord = 'window.scrollTo(%s,%s);' % (
@@ -97,19 +97,13 @@ class Element:
         """
         if not self.is_displayed():
             element = self.find_element(timeout)
+            #fix for FF MoveTargetOutOfBoundsException exception
             if 'firefox' in self.driver.capabilities['browserName']:
                 self.scroll_shim(self.driver, element)
             actions = ActionChains(self.driver)
             actions.move_to_element(element)
             actions.perform()
             sleep(0.1)
-            # Fix for FF
-            # self.driver.execute_script("arguments[0].scrollIntoView();", element)
-            # try:
-            #     self.driver.execute_script("arguments[0].scrollIntoView(false);", element)
-            # except MoveTargetOutOfBoundsException:
-            #     self.driver.execute_script("")
-            #     self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
 
 
 class GridItem(Element):

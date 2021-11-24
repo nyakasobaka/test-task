@@ -35,9 +35,6 @@ class SearchSteps:
         """click search button"""
         self.ui_app.pages.search_button.click()
 
-    # def submit_price(self):
-    #     self.ui_app.pages.search_results_page.search_results_grid.submit_price_button.click()
-
     def get_all_found_goods_on_page(self):
         """
         get all good items from grid
@@ -52,12 +49,6 @@ class SearchSteps:
         :return: element
         """
         return self.ui_app.pages.search_results_page.search_results_grid.get_item_by_title(text)
-
-    # def set_min_price(self, price):
-    #     self.ui_app.pages.search_results_page.search_results_grid.min_price_input.send_keys(price)
-    #
-    # def set_max_price(self, price):
-    #     self.ui_app.pages.search_results_page.search_results_grid.max_price_input.send_keys(price)
 
     def get_total_amount_of_goods(self)->str:
         """return total mount of goods shown in filter panel"""

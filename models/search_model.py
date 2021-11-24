@@ -1,5 +1,4 @@
-
-from typing import Optional, List, Any
+from typing import List, Any
 
 from lib.api.response_model import ResponseModel
 

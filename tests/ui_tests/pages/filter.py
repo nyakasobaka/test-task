@@ -4,7 +4,6 @@ from abc import abstractmethod
 from selenium.webdriver.common.by import By
 
 from helpers.common_helpers import ignore_case_xpath
-from helpers.retry_helper import retry
 from tests.ui_tests.pages.element import Element
 
 
@@ -26,6 +25,7 @@ class CategoryFilterComponent(FilterPanelComponent):
         super().__init__(driver, locator)
 
     def select_filter(self, filter_text):
+        """implementation for selecting category"""
         locator = (By.XPATH, f"//rz-filter-categories//span[contains(text(), '{filter_text}')]/parent::*")
         elem = Element(self.driver, locator)
         elem.scroll_into_view()
@@ -40,6 +40,7 @@ class SellerFilterComponent(FilterPanelComponent):
         super().__init__(driver, locator)
 
     def select_filter(self, filter_text):
+        """implementation for selecting seller checkbox"""
         locator = (By.XPATH, f"{self.filter_panel_locator_text}//input[{ignore_case_xpath('@id', filter_text)}]")
         elem = Element(self.driver, locator)
         elem.scroll_into_view()
@@ -55,6 +56,7 @@ class ProducerFilterComponent(FilterPanelComponent):
         self.producers_filter_panel = Element(self.driver, self.filter_panel_locator)
 
     def select_filter(self, filter_text):
+        """implementation for selecting producer checkbox"""
         locator = (By.XPATH, f"{self.filter_panel_locator_text}//input[{ignore_case_xpath('@id', filter_text)}]")
         elem = Element(self.driver, locator)
         elem.scroll_into_view()
@@ -75,6 +77,7 @@ class PriceFilterComponent(FilterPanelComponent):
         self.submit_price_button = Element(self.driver, self.submit_price_button_locator)
 
     def select_filter(self, filter_text=None):
+        """clicking OK button in prices filter section"""
         self.submit_price_button.click()
 
 
@@ -96,7 +99,9 @@ class PriceFilterDecorator(FilterPanelDecorator):
         self._item_component = item
 
     def set_min_price(self, price):
+        """set value to minimum price input"""
         self._item_component.min_price_input.send_keys(price)
 
     def set_max_price(self, price):
+        """set value to max price input"""
         self._item_component.max_price_input.send_keys(price)
