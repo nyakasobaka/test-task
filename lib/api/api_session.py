@@ -22,7 +22,6 @@ class ApiSession(Session):
         headers["Cache-Control"] = "no-cache"
         url = self._build_url(url)
 
-        #@step(f"{method}: {url}")
         def internal_request():
             LOGGER.info(f"Request: [{method}: {url}]")
             LOGGER.debug(f"Request body: [{data}]")
