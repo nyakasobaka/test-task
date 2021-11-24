@@ -2,7 +2,7 @@
 pipeline {
     agent none
     triggers {
-    cron('0 */3 * * * %BROWSER=chrome' + '\n 15 */3 * * * %BROWSER=firefox')
+    cron('0 */3 * * * %BROWSER=chrome' + '\n 48 * * * * %BROWSER=firefox')
     }
     parameters {
         choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'Select browser')
