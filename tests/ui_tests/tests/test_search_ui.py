@@ -84,7 +84,7 @@ def validate_amount_of_items(ui_app, api, context):
 def check_price_with_discount(ui_app, api, context):
     item_with_discount = get_items_with_discount(api, context.as_dict())[0]
     api_element = api.GetGoodsItemModule.get_goods_item_by_id(item_with_discount.id)
-    ui_result = ui_app.pages.search_results_page.search_results_grid.get_item_by_title(item_with_discount.title)
+    ui_result = ui_app.pages.search_results_page.search_results_grid.get_grid_item_by_good_id(item_with_discount.id)
     strategy_context = ValidationContext(DiscountValidationStrategy())
     strategy_context.validate_price(api_element, ui_result)
 
