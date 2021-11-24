@@ -3,8 +3,8 @@ pipeline {
     agent none
     triggers {
         parameterizedCron('''
-            5 * * * * %BROWSER=chrome
-            0 * * * * %BROWSER=firefox
+            5 */2 * * * %BROWSER=chrome
+            0 */3 * * * %BROWSER=firefox
         ''')
     }
     parameters {
