@@ -1,13 +1,15 @@
 import logging
 from dataclasses import dataclass
 from requests import Session, get
+
+import constants
 from lib.api.api_session import ApiSession
 
 
 @dataclass
 class ApiConfig:
-    base_url: str = "https://search.rozetka.com.ua"
-    common_api_url: str = "https://common-api.rozetka.com.ua/"
+    base_url: str = constants.URL
+    common_api_url: str = constants.COMMON_API_URL
 
 
 class ApiClient(Session):
