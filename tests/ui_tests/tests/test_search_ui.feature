@@ -29,7 +29,7 @@ Feature: As a User I should be able to search for goods
 
   Scenario: Search by price range and category
     Given main page opened
-    When enter text Asus into search field
+    When enter text Acer into search field
     And click search button
     When set min price in filter panel to 5000
     And set max price in filter panel to 10000
